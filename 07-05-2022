@@ -1,0 +1,37 @@
+Five days into July and I'm finally catching up on records keeping. I've actually been able to keep up with at least single Leetcode Dailies and am currently working on the weekly challenge. I really need to get back into documenting my progress as I go. Some good challenges today, and more evidence that I really need to study DP and memoization: it's a fundamental skill to solve some of these more difficult challenges in anything approaching reasonable time/space complexity and of course a clever way to simply approach many problems. 
+
+That being said, I'm glad to be getting back to it. I have a couple of light weeks left and I'd love to catchup on LC and maybe read through an entire Python book while I am at it. 
+
+
+
+As for todays LC challenges, I started with  Leetcode 128. Longest Consecutive Sequence (https://leetcode.com/problems/longest-consecutive-sequence/).
+
+I have to admit I was pretty stumped. It asks to count the longest subsequence in a list IF the list was ordered, but specifcally asks to do it in O(n) time, which more or less forbids sorting the given random list. Now obviously most sorting algorithms are going to be O(n log n) at best. The range was 10**-9 to 10**9 so counting sort as a cheat was right out, and Radix Sort isn't really O(n) anyhow. Couldnt just make an empty array and fill in if it was used as we go, at even 2 bytes per element it would be (2 or 4GB). I could maybe use a bitstream to keep it to 250MB I thought of the following, just track the min/max and add the nums to a set, then iterate through the whole range min->max to track consecutive runs, but as I guessed that times out. I spent a long time considering the buckets option... if we make our buckets the size of number of elements, then the longest consecutive run would span at most two buckets. We can keep a bool/hold the value of the min and max of a givenbucket so its trivial to see if two buckets "merge" if the max element of one bucket is in the set, and the min element of the following bucket is also present. We then can just sort the two buckets and check their sequences. Is this really O(n)? If the num list IS an entire sequence with no repeats than the bucket size would be n, and thus sorting it would be whatever our sorting algorithms worst case is, commonly O(n log n). So, my first guess with  buckets seems to fail this. 
+ 
+ I did learn the following about DefaultDict: The first arg has to be a callable function. You cannot just pass it a value to use as a default. You can either right a little function that merely returns your value, or use a lambda as a nameless in-place fucntion to do the same (lambda:"this stringgets returned automaticaly and becomes the dafault"
+ 
+Had to read the solution to this one. Its clever, and I dont think I would have gotten it.
+I spotted that we definitely need to use hashtables for O(1) lookups but didnt think of the trick
+of simply checking for the previous num to see if this is the start of subsequence. If num-1 is in
+nums then our current num is in the middle (or the end) of a subsequnce, so ignore it. We only count
+upward if we find the beginning of a subsequence. Its a pretty brilliant trick. 
+
+I really love the simplicity of this answer.
+
+Many people also posted solutions using something I was unfamiliar with, a DSU or Disjoint Union or Union Search. The idea is to iterate through and create a list of disjoint groups, in this case continuous subsequences. There is a bit of a lengthy standard patern for doing this that involves creating a class with baout 3 required functions. The result is trivial, just return the longest sublist once youve created each disjoint set.
+
+
+Next I took on LeetCode 256. Paint House https://leetcode.com/problems/paint-house/
+And once again hit a pretty significant road block. Immediately recognized it as an obvious DP candidate... and was stymied again by my just not having that pattern down solid. I recognized it could be solved by building a b-tree, and started coding it as such until I quickly realized it would have a height of 100... So, rather a bit of memory required. CLEARLY not going to work. The solution has to be DP WITH memoization doing the heavy lifting. That 100 level high btree is like 99.99999% the same calulations just done over and over. 
+
+Time to admit defeat and follow allong with one of the best written solutions I've ever seen. Really clear writing and diagrams do an excellent job building up the solution. Wow, what an amazing article. A clear explanation of building up recursion, adding in memoization, then looking again at the recursize calls as an optomized substructre that lends itself to DP. The solution is so elegant and basic once you see 
+
+#My goodness... thats absurdly simple. The last row is the cost of painting the last house... so
+#for each input in the row above it, simply pick the min of the remaining choices in the row below,
+#and literally add it to the element in this row. Repeat. The choice propogates up. Its amazing once
+# youve seen the directed graph diagram overlayed onto the input matrix.
+
+Once I understood, I was able to code it myself with ease, and even went the extra step by iterating through the colors of the row such that this solution should work for m color choices. 
+
+Its clear I need to do the DP cards. Onward!
+
