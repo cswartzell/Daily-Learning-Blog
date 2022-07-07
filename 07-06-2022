@@ -1,0 +1,4 @@
+The daily LC 509. Fibonacci Number was basically trivial. Fun to see a number of ways to do it. Recursion, Iterative, Array Based, DP, Binets Formula, and straight hardcoding as the input was limited to the first 30 numbers. Fun quick task. 
+
+I then spent HOURS working on 97. Interleaving String. https://leetcode.com/problems/interleaving-string/
+I was so close with my first solution but every submission would hit an edge case and I just couldnt tweak the logic to work in all cases. More than once it sprawled out into madness kludge fixes. Various versions worked for MOST cases, but not all. I'm going to have to give in on this solution and try from scratch before looking at the answer. Im so annoyed that my solution is either just a bit off, or very close but with a fatal flaw that it can never work and I do not know the difference! Time to start fresh. 
