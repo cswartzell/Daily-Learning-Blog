@@ -1,0 +1,4 @@
+A very basic one today, Leetcode 118. Pascal's Triangle was a simple DP repeated addition. Nothing even clever about it. I played around with .append() vs + concatenation for speed testing, supposedly concatenation is faster. However, the test cases were too short and I saw time trials in the top 10% and bottom 90% on the same code, so I wasn't able to verify.
+
+Pascals triangle has some interesting math. The first diagonal is the identity, plus 0. The second is the series +1 (1,2,3), the third row is the triangular numbers, the fourth row is apparently the quadrilateral numbners, the fifth is a sequence Ive seen before when solving the champaign pouring question I think (obviously related to pascals triangle: OEIS Binomial coefficient binomial(n,4) = n*(n-1)*(n-2)*(n-3)/24.
+It may be possible to come up with a formulaic answer that can solve this with math rather than by simulating it. Interesting. Probably beyond me though. 
