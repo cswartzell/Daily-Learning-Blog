@@ -11,3 +11,10 @@ After that it was pretty simple: Prime a stack with the starting node, and push 
 Either we process the loop succesfully, fall out and simply return True, or we MUST have hit a fail case and have exited. 
 
 Overall, pretty neat actually. 
+
+Oh, I was having some trouble adding the curr_node to the set keeping track of the path while adding adjacent nodes to the stack. I did not want to have to create a temp_set, add the new node to it, add the curr_nodes path, then pass that to the stack... too many lines, and I knew there must be a way to do it in one. However
+
+function(existing_set.add({element})) or functiono(({element}).update(existing_set)) 
+
+Does not work as neither the add nor update methods actually return anything. Thanks to stackoverfolow folks, they let me know that the UNION operation does though: 
+function( {set1} | {set2} ) DOES simply combine them and returns the new set, without modifying either base sets, and does so without a temporary placeholder. Plus it looks clean. Always exicted to learn a new trick. 
