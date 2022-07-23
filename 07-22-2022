@@ -1,0 +1,13 @@
+Today I did a few Leetcode challenges, including 1059. All Paths from Source Lead to Destination, which was a neat directed graph problem. Similar to linked lists, directed graphs are... well, directed. In this case we're given a start node and an end node, and we must find if all paths from the start end at the finish. The problem itself is slightly poorly worded, though one can reason out some of the tricky bits. For one, it states that all paths must be finite. This immediately means that there can be absolutely no loops whithin the paths, even self referential loops of the final node, as one can construct an arbitrary number of paths by adding loops. Aha, our first "fail condition" for parsing paths. If we simply keep a trace of the current path taken to reach the next nodes during traversal, anytime we encounter a node ALREADY in our path taken list we know there must be a cycle and can fail out instantly. 
+
+The other fail condition is we reach a leaf node, one that does not have any edges leading off from it, unless it should be the destination terminal node of course. I should learn the official terminology: I believe this is its "outdegree"
+
+I opted out of recursion as I am not sure how to HALT a recursive process once going. A single failure condition above means we can immediately stop processing and return FALSE to the premise. Iterative proccessing just seems like it could do that a lot faster. There were as many as 1000 edges so we may have overblown the system stack anyhow. 
+
+First things first, create an adjacency list. Could have gone with a queue, but as the "list nodes" are effectively indicies a list seemed to make sense. We however do not know how many nodes may actually appear in our list. Its NOT N, which is a mysterious datapoint poorly explained in the question. N is merely a cap on the "value/index" of a node. Nodes dont have values, rather they are just arbitrarily numbered, and these numbers are only visible in the edges. A dictionary with a set for adjacencies probably would have made more sense
+
+After that it was pretty simple: Prime a stack with the starting node, and push its... children? Adjacent nodes onto the stack, adding the current node to the path set as an arguement. We use a set for hash speeds. I got a little tripped up by the base case of a starting node that had no edges from it, so had to rejigger the initiation and checks to catch this base case. Then, just check for our two fail states, returning False if they are ever triggered. 
+
+Either we process the loop succesfully, fall out and simply return True, or we MUST have hit a fail case and have exited. 
+
+Overall, pretty neat actually. 
