@@ -1,0 +1,24 @@
+Leetcode 315. Count of Smaller Numbers After Self is marked as a hard problem, and given the listed solutions rightly so. It is quite straighforward, given an array of nums, return an array of the same size where answer[i] is equal to the number of elements in og_arry[i:] such that each element in the slice is smaller than og_arry[i]. The naive solution is to simply process this in two loops, summing every positive case. This is of course an O(n**2) solution (Im actually not certain, seems like its a O(nth triangular number), as you are processing one less element each time, not the entire liest). Regardless, this is of course completely terrible. We need a way to use information already garnered to process the nodes faster. Now, we could start a parallel 2d array: for every i in og_arry, store an array of how many instances have we seen i thus far? We'd need an array the length of n times the width of the possibilities: the highest number to the lowest (plus an array of length n for answer). We then pass this tracking array forward and simply add on the next seen digit to it. Once this is done for all i in og_array we then have to process FORWARD, summing up all the occurances of less_than_i for tracking_array[i], which again is a lot of redundant work.
+
+Segment Tree to the rescue. 
+    #https://leetcode.com/articles/a-recursive-approach-to-segment-trees-range-sum-queries-lazy-propagation/
+    is requisite to understanding what is happening here, but we create a new tree, a Segmentation Tree
+    which has our array as the leaves (all at the bottom layer), and each node above them is some operation
+    on its children: in this case a count of how many elements less than the node index have been seen.
+    this allows us to update sections of a tree, rather than say a copy of vals_seen for EVERY index
+    in the original array. It works as we are updating and iterating backwards, but only care about
+    points to the right of where we are: thus the points can be processed one by one from the right.
+    
+So instead of processing the entire array, twice, we can come up with the answer as we move right to left. Similarly, we do not need to to sum each index in our tree each time, the higher nodes of the tree already contain the sums of branches of lower nodes that fit the criteria. 
+
+A very neat, albeit complex solution. I think its very unlikely I'd recall enough about this to actually code it in an interview. I just now understand it maybe enough to give a high leve hand wavey explanation of how it works.
+
+I also quickly did 240. Search a 2D Matrix II, which seemed quite easy. Find a target int in an 2d array such that the rows are always increasing, as are the columns. My initial solution was the pretty straighforward iterative one, and frankly beats the time of some of the much more complex given solutions: this is likely due to overhead and small test samples. In my initial understanding, I did not see that there was much information relating rows to columns. The target could be in any row, regardless of its value, the increasing property between rows and cols is independent... or so I thought. I figured you then need to basically search in each row until you find the target, or a number larger than the target implying its not in this row, iterate on the next row, again starting from the first column. 
+
+The first improvement is a binary search. Because the row itself is sorted, obviously a bsearch on the row improves search time. The given solution lists a bsearch on the rows themselves well and I had a hard time understanding why: the first row could be [1,2,4,10000000, 10000000000001], the second can be [4,6,7,8,8]. It did not seem like there was a relation or sorting to the rows themelves. The cols however ARE sorted. These in conjunction mean there is a relation along the diagonals: 
+
+[0,1] is strictly larger than [0,0]. [1,0] is strictly larger than [0,0], therefore [1,1] is stricctly large than any of the other three nodes. 
+
+Secondly, there is a neat space partitioning solution, but honestly it seemed a little cumbersome.
+
+The final, and I think best solution was actually remarkably close to my original solution, but started at the bottom row and worked up, and right. Note, I worked up and right, but reset to the head of each row each time. Merely by changing the direction of the search we can eliminate the need for leftward movement. It can never prune the answer using this algorithm, and reduces the amount of the space processed. Very clever. 
