@@ -1,1 +1,5 @@
 A bunch of easy problems, but I was able to do them quikcly, pretty much with minimal rework. I have really come to rely on the debugger and the ole' try and fail and correct a line or two method of writting code and this a terrible habit. I really need to pause, consider an execution and really think about what might happen. Consider edge cases without needing the Leetcode testing unit let me know there is a failure... IRL you dont get free test cases, you need to write them yourself. If I cannot recognize input classes and edge cases, how will I write unit test? I Guess Test Driven Development should be in my near future: I shoud consider ignoring the leetcode cases, and write several of my own in, trying to catcha all possibilities. This is actually a great idea, where I can correct this bad habbit, but still use the leetcode interface and daily challenges. 
+
+206. Reverse Linked List
+876. Middle of the Linked List
+142. Linked List Cycle II
